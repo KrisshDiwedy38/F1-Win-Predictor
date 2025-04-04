@@ -4,7 +4,7 @@ import numpy as np
 from sqlalchemy import create_engine
 
 db_params = {
-    "dbname": "first",
+    "dbname": "f1data",
     "user": "postgres",
     "password": "Krissh",
     "host": "localhost",
@@ -20,10 +20,5 @@ engine = create_engine(conn_str)
 with engine.connect() as conn:
     print("Connected to PostgreSQL!")
 
-f1.Cache.enable_cache("F1_Cache")
-values = []
-session = f1.get_session(2025,2,'R')
-session._load_weather_data()
-session._load_drivers_results()
-print(session.results.columns)
-print(session.weather_data["Rainfall"])
+df = pd.read_sql('SELECT * FROM "F1ResultData" ORDER BY "index" ;', engine)
+print(df)
