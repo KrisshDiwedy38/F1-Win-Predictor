@@ -15,8 +15,6 @@ db_params = {
     "port": "5432"
 }
 
-f1.Cache.enable_cache("F1_Cache")
-
 conn_str = f"postgresql+psycopg2://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}/{db_params['dbname']}"
 
 # Create SQLAlchemy engine
