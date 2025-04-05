@@ -25,4 +25,7 @@ with engine.connect() as conn:
     print("Connected to PostgreSQL!")
 
 df = pd.read_sql('SELECT * FROM "F1ResultData" ORDER BY "index" ;', engine)
+weather_df = pd.read_sql('SELECT * FROM "F1WeatherData" ORDER BY "index" ;', engine)
 
+print(df.iloc[-40:])
+print(weather_df.iloc[-5:])
