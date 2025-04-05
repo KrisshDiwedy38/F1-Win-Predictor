@@ -2,6 +2,10 @@ import fastf1 as f1
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
+import matplotlib.pyplot as plt
+from datetime import date
+
+f1.Cache.enable_cache("F1_Cache")
 
 db_params = {
     "dbname": "f1data",
@@ -21,4 +25,4 @@ with engine.connect() as conn:
     print("Connected to PostgreSQL!")
 
 df = pd.read_sql('SELECT * FROM "F1ResultData" ORDER BY "index" ;', engine)
-print(df)
+
