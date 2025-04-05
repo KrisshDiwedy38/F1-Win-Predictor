@@ -92,7 +92,7 @@ f1_result_df = pd.DataFrame(result_values)
 f1_weather_df = pd.DataFrame(weather_values)
 
 # Converting dfs to sql table and inserting in the database
-f1_result_df.to_sql("F1ResultData", engine, if_exists="append", index = True)
+f1_result_df.to_sql("F1ResultData", engine, if_exists="append", index = False)
 print("Result Data Enter Successfully!")
-f1_weather_df.to_sql("F1WeatherData", engine, if_exists="append", index= True)
+f1_weather_df.to_sql("F1WeatherData", engine, if_exists="append", index= False)
 print("Weather Data Enter Successfully!")
