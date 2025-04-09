@@ -1,9 +1,6 @@
 import fastf1 as f1
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
 from sqlalchemy import create_engine
-from sklearn.linear_model import LinearRegression
 
 
 f1.Cache.enable_cache("F1_Cache")
