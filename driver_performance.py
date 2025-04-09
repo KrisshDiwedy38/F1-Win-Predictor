@@ -2,9 +2,7 @@ import fastf1 as f1
 import pandas as pd
 from sqlalchemy import create_engine
 
-
-f1.Cache.enable_cache("F1_Cache")
-
+# SQL parameters
 db_params = {
     "dbname": "f1data",
     "user": "postgres",
@@ -22,9 +20,11 @@ engine = create_engine(conn_str)
 with engine.connect() as conn:
     print("Connected to PostgreSQL!")
 
+# Extract dataset from SQL to IDE in form of a pandas dataframe 
 df = pd.read_sql('SELECT * FROM "F1ResultData" ORDER BY "index" ;', engine)
 weather_df = pd.read_sql('SELECT * FROM "F1WeatherData" ORDER BY "index" ;', engine)
 
+# Number for laps in F1 races
 race_laps = {
     "Australian Grand Prix": 58,
     "Italian Grand Prix": 53,
@@ -56,8 +56,10 @@ race_laps = {
 driver_performance = []
 times = []
 
+# Getting data to calculate the performance
 driver_performance_data = df.loc[:,["DriverCode", "Time", "RaceName"]].copy().dropna()
 
+# Driver Performance  = time / number of laps : Will be used to calculate the circuit specific performance
 for row in driver_performance_data.sort_values("DriverCode").itertuples():
    if row.RaceName in race_laps:
       performance = row.Time / race_laps[row.RaceName]
@@ -66,7 +68,8 @@ for row in driver_performance_data.sort_values("DriverCode").itertuples():
    
 driver_performance_data['Performance'] = driver_performance
 driver_performance_data['LapTime'] = times
- 
+
+# Driver Mean = Mean of driver performance from all the races in dataset : Shows the form of the driver coming into the race
 means = {}
 for driver in driver_performance_data["DriverCode"].unique():
     driver_mean = driver_performance_data[driver_performance_data["DriverCode"] == driver]["Performance"].mean()
