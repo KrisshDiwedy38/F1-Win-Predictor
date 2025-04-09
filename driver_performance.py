@@ -59,28 +59,20 @@ race_laps = {
 driver_performance = []
 times = []
 
-driver_data = df.loc[:,["DriverCode", "Time", "RaceName"]].copy().dropna()
+driver_performance_data = df.loc[:,["DriverCode", "Time", "RaceName"]].copy().dropna()
 
-for row in driver_data.sort_values("DriverCode").itertuples():
+for row in driver_performance_data.sort_values("DriverCode").itertuples():
    if row.RaceName in race_laps:
       performance = row.Time / race_laps[row.RaceName]
       times.append(row.Time)
       driver_performance.append(performance)
    
-performance_df = pd.DataFrame(
-   {
-      'Time' : times,
-      'Performance' : driver_performance
-   }
-)
-
-driver_race_performance = pd.merge(driver_data, performance_df, on='Time')
-
+driver_performance_data['Performance'] = driver_performance
+driver_performance_data['LapTime'] = times
+ 
 means = {}
-for driver in driver_race_performance["DriverCode"].unique():
-    driver_mean = driver_race_performance[driver_race_performance["DriverCode"] == driver]["Performance"].mean()
+for driver in driver_performance_data["DriverCode"].unique():
+    driver_mean = driver_performance_data[driver_performance_data["DriverCode"] == driver]["Performance"].mean()
     means[driver] = driver_mean
 
-mean_df = pd.DataFrame(list(means.items()), columns=["DriverCode", "MeanPerformance"])
-
-print(mean_df.sort_values("MeanPerformance"))
+driver_mean_df = pd.DataFrame(list(means.items()), columns=["DriverCode", "MeanPerformance"])
