@@ -10,7 +10,7 @@ from datetime import date
 from driver_performance import driver_performance_data 
 from driver_performance import driver_mean_df
 
-# SQL Accessing parameters
+# SQL parameters
 db_params = {
     "dbname": "f1data",
     "user": "postgres",
